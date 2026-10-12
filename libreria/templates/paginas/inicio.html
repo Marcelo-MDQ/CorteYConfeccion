@@ -1,0 +1,100 @@
+{% extends 'paginas/base.html' %}
+
+{% block content %}
+<style>
+    .grid { 
+        display: grid; 
+        /* Hacemos las tarjetas un pelín más anchas para que respiren */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+        gap: 40px 30px; 
+    }
+    .producto { 
+        text-align: center; 
+        border-radius: 24px; /* Bordes bien redondeados e informales */
+        padding: 30px 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Efecto al pasar el mouse: la tarjeta flota */
+    .producto:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+
+    /* Magia: Colores de fondo automáticos y rotativos (Pasteles) */
+    .producto:nth-child(5n+1) { background-color: #ffe5ec; } /* Rosa */
+    .producto:nth-child(5n+2) { background-color: #e5f4e3; } /* Menta */
+    .producto:nth-child(5n+3) { background-color: #fff3cd; } /* Amarillo */
+    .producto:nth-child(5n+4) { background-color: #e3f2fd; } /* Celeste */
+    .producto:nth-child(5n+5) { background-color: #f3e5f5; } /* Lila */
+
+    .producto img { 
+        width: 90%; 
+        aspect-ratio: 1; /* Mantiene un marco cuadrado ordenado */
+        object-fit: contain;
+        margin-bottom: 20px; 
+        /* TRUCO: Hace que el fondo blanco de tu foto se fusione con el color pastel */
+        mix-blend-mode: multiply; 
+    }
+    
+    .producto-img-placeholder {
+        width: 90%;
+        aspect-ratio: 1;
+        margin: 0 auto 20px;
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 15px;
+    }
+
+    .producto-info { 
+        line-height: 1.4; 
+    }
+    .producto-nombre { 
+        font-size: 15px; 
+        font-weight: bold;
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+        color: #222;
+    }
+    .producto-categoria { 
+        font-size: 13px; 
+        color: #666; 
+        margin-top: 8px;
+        font-style: italic; /* Un toque más orgánico */
+    }
+</style>
+
+
+<!-- Título de la categoría seleccionada (solo aparece si filtras por el menú) -->
+{% if categoria_actual %}
+    <h2 style="text-align: center; text-transform: uppercase; font-weight: normal; font-size: 16px; margin-bottom: 40px; letter-spacing: 2px;">
+        {{ categoria_actual.nombrecategoria }}
+    </h2>
+{% endif %}
+
+<!-- Grilla de productos -->
+<div class="grid">
+    {% for articulo in articulos %}
+    <div class="producto">
+        <!-- El enlace (<a>) envuelve la foto y el texto para que todo sea clickeable -->
+        <a href="{% url 'detalle_articulo' articulo.id_articulo %}" style="text-decoration: none; color: inherit;">
+            
+            <!-- Lógica para mostrar la foto o el recuadro gris si no hay foto -->
+            {% if articulo.imagen1 %}
+                <img src="{{ articulo.imagen1.url }}" alt="{{ articulo.nombrearticulo }}" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; margin-bottom: 15px;">
+            {% else %}
+                <div class="producto-img-placeholder"></div>
+            {% endif %}
+            
+            <!-- Nombre y categoría debajo de la foto -->
+            <div class="producto-info">
+                <div class="producto-nombre">{{ articulo.nombrearticulo }}</div>
+                <div class="producto-categoria">{{ articulo.categoria.nombrecategoria }}</div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <!-- Mensaje por si la categoría no tiene artículos cargados aún -->
+    <p style="text-align: center; grid-column: 1 / -1; color: #888;">No hay artículos en esta sección por el momento.</p>
+    {% endfor %}
+</div>
+{% endblock %}

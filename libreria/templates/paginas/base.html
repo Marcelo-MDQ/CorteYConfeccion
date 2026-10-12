@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corte y Confección</title>
+    <style>
+        /* Importamos una fuente de Google más amigable y redondita */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+            background-color: #fdfcf9; /* Un fondo cálido, no tan blanco hospital */
+        }
+        header { 
+            text-align: center; 
+            padding: 40px 0 20px; 
+        }
+        .logo { 
+            font-size: 32px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            text-decoration: none; 
+            color: #ff6b6b; /* Un color coral vibrante y alegre */
+        }
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            margin-top: 30px; 
+        }
+        nav a { 
+            text-decoration: none; 
+            color: #555; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            font-weight: 600;
+            letter-spacing: 1.5px; 
+            padding: 8px 16px;
+            border-radius: 20px; /* Botones redonditos */
+            transition: all 0.3s ease;
+        }
+        nav a:hover { 
+            background-color: #ff6b6b; 
+            color: white; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">Corte y Confección</a>
+        <nav>
+            <a href="/">Ver Todo</a>
+            <!-- Aquí se imprime tu menú dinámicamente desde MySQL -->
+            {% for cat in categorias %}
+                <a href="{% url 'categoria' cat.id_categoria %}">{{ cat.nombrecategoria }}</a>
+            {% endfor %}
+        </nav>
+    </header>
+    
+    <div class="container">
+        <!-- Aquí adentro cargará la grilla de productos -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
