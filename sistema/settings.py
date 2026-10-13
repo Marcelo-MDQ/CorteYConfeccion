@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xe+x)*klf8e!305=k8lcd@&6ii)zupm&+avu3b6gjlom5xt*gq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+#ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
-
+# en produccion 
+DEBUG = False
+ALLOWED_HOSTS = ['corteyconfeccion.pythonanywhere.com']
 
 # Application definition
 
@@ -77,20 +79,30 @@ WSGI_APPLICATION = 'sistema.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# base del sitio corteyconfeccion.pythonanywhere.com
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'corteyconfeccion$corteyconfeccion',
+        'USER': 'corteyconfeccion',
+        'PASSWORD': 'Romeo13681368',
+        'HOST': 'corteyconfeccion.mysql.pythonanywhere-services.com',
+    }
+}
 
-DATABASES = {  
-  'default': {  
-     'ENGINE': 'django.db.backends.mysql',  
-     'NAME': 'corteyconfeccion',  
-     'USER': 'root',
-     'PASSWORD': '',
-     'HOST': 'localhost',
-     'PORT': 3306,
-     'OPTIONS': {
-       'sql_mode': 'traditional',
-        }
-   }  
- }
+#DATABASES = {  
+#  'default': {  
+#     'ENGINE': 'django.db.backends.mysql',  
+#     'NAME': 'corteyconfeccion',  
+#     'USER': 'root',
+#     'PASSWORD': '',
+#     'HOST': 'localhost',
+#     'PORT': 3306,
+#     'OPTIONS': {
+#       'sql_mode': 'traditional',
+#        }
+#   }  
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
